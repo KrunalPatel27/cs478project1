@@ -3,9 +3,12 @@ package com.example.krunal.project1;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -30,13 +33,18 @@ public class Activity2 extends Activity {
                 eventReturnResult();
             }
         });
+        editText1.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if(actionId == EditorInfo.IME_ACTION_DONE){
+                    phone = editText1.getText().toString();
+                    eventReturnResult();
+                    return true;
+                }
+                return false;
+            }
+        });
 
-    }
-
-    @Override
-    public void onBackPressed() {
-        phone = editText1.getText().toString();
-        eventReturnResult();
     }
 
     private void eventReturnResult(){
@@ -59,7 +67,8 @@ public class Activity2 extends Activity {
         boolean isValid = false;
 
         //Initialize reg ex for phone number.
-        String expression = "^\\(?([0-9]{3})\\)?[-.\\s]?([0-9]{3})[-.\\s]?([0-9]{4})$";
+        //String expression = "^\\(([0-9]{3})\\)[-.\\s]([0-9]{3})[-.\\s]([0-9]{4})$";
+        String expression = "[(][0-9]{3}[)][ ]?[0-9]{3}[-][0-9]{4}$";
         CharSequence inputStr = phoneNumber;
         Pattern pattern = Pattern.compile(expression);
         Matcher matcher = pattern.matcher(inputStr);
