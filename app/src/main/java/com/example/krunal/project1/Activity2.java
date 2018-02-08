@@ -47,6 +47,12 @@ public class Activity2 extends Activity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+        phone = editText1.getText().toString();
+        eventReturnResult();
+    }
+
     private void eventReturnResult(){
         if(isPhoneNumberValid(phone)){
             System.out.println("pass:" + phone);
@@ -66,8 +72,7 @@ public class Activity2 extends Activity {
     public static boolean isPhoneNumberValid(String phoneNumber){
         boolean isValid = false;
 
-        //Initialize reg ex for phone number.
-        //String expression = "^\\(([0-9]{3})\\)[-.\\s]([0-9]{3})[-.\\s]([0-9]{4})$";
+        //Initialize regex for phone number.
         String expression = "[(][0-9]{3}[)][ ]?[0-9]{3}[-][0-9]{4}$";
         CharSequence inputStr = phoneNumber;
         Pattern pattern = Pattern.compile(expression);
